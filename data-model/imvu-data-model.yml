@@ -1,0 +1,201 @@
+generated: '2026-08-23'
+method: probed
+source: 'https://api.imvu.com (live responses, 2026-08-23) + https://github.com/imvu/imvu-scripting-docs/blob/main/README.md'
+note: 'There is no OpenAPI and no schema document to derive from. The REST entities and relationships
+  below were read out of real hypermedia responses — the `relations` block of each node names its
+  neighbours by URL, which is the closest thing this API has to a declared schema. The scripting
+  entities were read from IMVU''s published parameter documentation. Fields listed are those actually
+  present in the responses probed; the list is not exhaustive of the API.'
+surfaces:
+  rest: https://api.imvu.com
+  room_scripting: https://github.com/imvu/imvu-scripting-docs
+entities:
+- name: Product
+  surface: rest
+  node: /product/product-{product_id}
+  identifier: product_id
+  probed: https://api.imvu.com/product/product-52977230
+  fields:
+  - {name: product_id, type: integer}
+  - {name: product_name, type: string}
+  - {name: creator_cid, type: integer, note: foreign key to User.cid}
+  - {name: creator_name, type: string}
+  - {name: rating, type: string, note: 'content rating, e.g. GA'}
+  - {name: product_price, type: integer, note: price in IMVU Credits}
+  - {name: discount_price, type: integer}
+  - {name: product_page, type: string, format: uri}
+  - {name: creator_page, type: string, format: uri}
+  - {name: is_bundle, type: boolean}
+  - {name: profit, type: integer}
+  - {name: derivation_profit, type: integer}
+  - {name: allows_derivation, type: integer}
+  - {name: allow_third_party_bundle, type: integer}
+  - {name: product_image, type: string, format: uri}
+  - {name: preview_image, type: string, format: uri}
+  - {name: asset_url, type: string, format: uri}
+  - {name: category_path, type: array, note: 'ordered [{id, name}] taxonomy chain'}
+  - {name: categories, type: array}
+  - {name: is, type: array, note: 'capability flags, e.g. furniture, dynamic_texture_full_surface'}
+  - {name: compatible_body_patterns, type: array}
+  - {name: gender, type: [string, 'null']}
+  - {name: gender_restriction, type: string}
+  - {name: has_plus_badge, type: boolean}
+  - {name: is_plus_badge_compatible, type: boolean}
+  - {name: is_visible, type: boolean}
+  - {name: is_purchasable, type: boolean}
+  - {name: is_bundable, type: integer}
+  - {name: is_wearable_in_pure, type: boolean}
+  - {name: allow_delete, type: boolean}
+  - {name: is_nft, type: boolean}
+  - {name: is_boosted, type: boolean}
+  - {name: supports_youtube, type: boolean}
+  - {name: default_orientation, type: string, note: 'e.g. Floor'}
+  - {name: look_url, type: [string, 'null']}
+  - {name: tags, type: array}
+- name: User
+  surface: rest
+  node: /user/user-{cid}
+  identifier: cid
+  probed: https://api.imvu.com/user/user-39
+  fields:
+  - {name: display_name, type: string}
+  - {name: created, type: string, format: date-time}
+  - {name: registered, type: integer, note: unix epoch seconds}
+  - {name: gender, type: string}
+  - {name: age, type: integer}
+  note: 'Collection at /user is paginated and returns zero items without a query, so it is a search
+    surface rather than a directory.'
+- name: Room
+  surface: rest
+  node: /room/room-{id}
+  identifier: id
+  probed: 'https://api.imvu.com/room (200, empty collection); https://api.imvu.com/room/room-1 (401 AUTHENTICATION-005)'
+  fields: []
+  note: Individual room nodes require an authenticated session.
+- name: DerivationFee
+  surface: rest
+  node: /derivation_fee/derivation_fee-{product_id}
+  identifier: product_id
+  probed: 'https://api.imvu.com/derivation_fee/derivation_fee-52977230 (403, "Derivation not allowed")'
+  note: 'Exists only where the parent product allows derivation; returns 403 otherwise. Encodes the
+    creator-economy rule that a derived product owes a fee to its ancestor.'
+- name: LookModel
+  surface: rest
+  node: /look_model/look_model-product-{product_id}
+  probed: 'https://api.imvu.com/look_model/look_model-product-52977230 (404 LOOK_MODEL-PRODUCT-002)'
+- name: RoomScriptUser
+  surface: room-scripting
+  identifier: cid
+  fields:
+  - {name: cid, type: integer, note: customer id, joins to REST User}
+  - {name: name, type: string}
+  - {name: seat_number, type: [integer, 'null']}
+  - {name: seat_furni_id, type: [integer, 'null']}
+  - {name: seat_furni_pid, type: [integer, 'null'], note: joins to REST Product.product_id}
+  - {name: seat_furni_label, type: [string, 'null']}
+  - {name: outfit, type: array, note: array of product ids}
+- name: FurnitureRequest
+  surface: room-scripting
+  identifier: label
+  fields:
+  - {name: label, type: string, note: 'caller-chosen idempotency key; must start A-Za-z'}
+  - {name: pid, type: integer, note: joins to REST Product.product_id; must be owned by the room owner}
+  - {name: node, type: string, note: 'anchor node, e.g. furniture.Floor.178'}
+  - {name: x, type: number, default: 0}
+  - {name: y, type: number, default: 0}
+  - {name: z, type: number, default: 0}
+  - {name: yaw, type: number, default: 0}
+  - {name: pitch, type: number, default: 0}
+  - {name: roll, type: number, default: 0}
+  - {name: scale, type: number, default: 1.0, note: minimum 0.01}
+  - {name: freeplay_attrs, type: object, note: 'per-axis booleans plus all_nodes and fids[]'}
+- name: Poll
+  surface: room-scripting
+  fields:
+  - {name: type, type: string, enum: [custom, presenter], default: custom}
+  - {name: content, type: string}
+  - {name: duration, type: integer, default: 60, minimum: 10, maximum: 1800}
+  - {name: options, type: array}
+  - {name: results.tallies, type: array, note: 'ordered most to least votes; each entry has content and tally'}
+- name: Tip
+  surface: room-scripting
+  fields:
+  - {name: sender, type: object, note: '{cid, name}'}
+  - {name: recipient, type: object, note: '{cid, name}'}
+  - {name: credits_sent, type: integer, note: before transaction fees}
+  - {name: is_private, type: boolean}
+- name: DataRecord
+  surface: room-scripting
+  identifier: 'label + scope + visitor'
+  fields:
+  - {name: label, type: string, note: max 128 bytes}
+  - {name: scope, type: string, enum: [script, room, account], default: script}
+  - {name: visitor, type: integer, default: 0, note: 'a visitor cid re-keys the record to that visitor'}
+  - {name: value, type: [string, number, boolean, object], note: 'functions and unserializable values are dropped'}
+- name: MediaParams
+  surface: room-scripting
+  fields:
+  - {name: label, type: string, note: joins to FurnitureRequest.label}
+  - {name: target_name, type: string, note: material on the furniture product}
+  - {name: provider, type: string, default: youtube}
+  - {name: format, type: string, default: recording}
+  - {name: media_title, type: string, default: Untitled}
+  - {name: media_url, type: string, format: uri}
+  - {name: media_timestamp, type: integer, default: 0}
+  - {name: media_volume, type: integer, default: 100}
+  - {name: media_playback_speed, type: number, default: 1}
+relationships:
+- from: Product
+  to: User
+  kind: belongs_to
+  via: relations.creator
+  example: https://api.imvu.com/user/user-39
+- from: Product
+  to: Product
+  kind: belongs_to
+  via: relations.parent
+  note: 'The derivation graph. A derived product points at the ancestor it was derived from.'
+  example: https://api.imvu.com/product/product-12908
+- from: Product
+  to: Product
+  kind: has_many
+  via: relations.ancestor_products
+- from: Product
+  to: Product
+  kind: has_many
+  via: relations.uml_products
+- from: Product
+  to: DerivationFee
+  kind: has_one
+  via: relations.derivation_fee
+- from: Product
+  to: LookModel
+  kind: has_one
+  via: relations.look_model
+- from: Product
+  to: AllowNft
+  kind: has_one
+  via: relations.allow_nft
+  note: 'Sub-resource at /product/{pid}/allow_nft/allow_nft-{pid}; the NFT-minting eligibility flag for
+    the MetaJuice side of the economy.'
+- from: RoomScriptUser
+  to: Product
+  kind: has_many
+  via: outfit
+  note: 'Array of product ids; a script can branch on whether an avatar is wearing a given product.'
+- from: RoomScriptUser
+  to: FurnitureRequest
+  kind: belongs_to
+  via: seat_furni_label
+- from: FurnitureRequest
+  to: Product
+  kind: belongs_to
+  via: pid
+- from: MediaParams
+  to: FurnitureRequest
+  kind: belongs_to
+  via: label
+- from: Tip
+  to: RoomScriptUser
+  kind: belongs_to
+  via: sender.cid / recipient.cid

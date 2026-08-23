@@ -1,0 +1,89 @@
+generated: '2026-08-23'
+method: probed
+source: https://api.imvu.com
+note: 'IMVU publishes no error reference. Every code below was observed on a live, unauthenticated
+  request to api.imvu.com on 2026-08-23; the exact request that produced it is recorded per entry. This
+  is an observation log, not a provider-published catalog, and it is certainly incomplete — only codes
+  reachable without credentials could be seen.'
+format: custom
+media_type: application/json
+problem_json: false
+rfc9457: false
+envelope:
+  shape: '{ "status": "failure", "error": "<CODE>", "message": "<human readable>" }'
+  fields:
+  - name: status
+    type: string
+    values: [success, failure]
+  - name: error
+    type: string
+    description: 'Machine-readable code. Two families observed: DOMAIN-NNN (three-digit, e.g. NODE-001,
+      LOGIN-005) and DOMAIN_NNN (underscore, e.g. REST_DISCOVER_001). At least one endpoint returns a
+      human string in this field instead of a code (see NOT-FOUND-SESSION).'
+  - name: message
+    type: string
+    description: Human-readable explanation. Not localized in any response observed.
+  success_envelope: '{ "status": "success", "id": "<node url>", "denormalized": { ... }, "http": { ... } }'
+error_count: 8
+errors:
+- code: AUTHORIZATION-001
+  http_status: 403
+  title: Unauthorized
+  message: Unauthorized
+  observed_at: https://api.imvu.com/
+  remediation: 'The API root itself is not browsable anonymously. Address a concrete node or collection
+    (for example /product/product-<id>) rather than /.'
+- code: AUTHENTICATION-005
+  http_status: 401
+  title: Not authorized for request
+  message: Not authorized for request
+  observed_at: https://api.imvu.com/room/room-1
+  remediation: 'The node exists but requires an authenticated session. IMVU publishes no key-issuance
+    process, so there is no public remediation.'
+- code: NODE-001
+  http_status: 404
+  title: Couldnt find node
+  message: Couldnt find node
+  observed_at: https://api.imvu.com/user/user-1
+  remediation: 'The service exists but the identifier does not resolve to a node. Note the identifier is
+    namespaced — /user/user-<id>, /product/product-<id> — and a bare id 404s the same way.'
+- code: REST_DISCOVER_001
+  http_status: 404
+  title: Service does not exist
+  message: Service <name> does not exist
+  observed_at: https://api.imvu.com/nonexistent
+  remediation: 'Distinguishes an unknown SERVICE from an unknown NODE. This is the API''s de facto
+    service-discovery signal: a name that returns NODE-001 or 401 is a real service, a name that returns
+    REST_DISCOVER_001 is not.'
+- code: PROFILE-000
+  http_status: 405
+  title: Method not allowed
+  message: Method not allowed
+  observed_at: https://api.imvu.com/profile
+  remediation: The service exists but does not accept the method used.
+- code: ROUTER-002
+  http_status: 405
+  title: Method does not exist for service
+  message: Method GET does not exist for login
+  observed_at: https://api.imvu.com/login
+  remediation: 'Distinct from PROFILE-000: names both the offending method and the service.'
+- code: LOGIN-005
+  http_status: 400
+  title: Invalid login credentials
+  message: Invalid login credentials
+  observed_at: 'POST https://api.imvu.com/login with an empty JSON body'
+  remediation: 'Returned for a malformed or empty credential body as well as for wrong credentials — the
+    API does not distinguish 400-shaped validation failure from authentication failure here.'
+- code: NOT-FOUND-SESSION
+  http_status: 404
+  title: Session does not exist
+  message: Session does not exist.
+  observed_at: https://api.imvu.com/login/session
+  remediation: 'Inconsistency worth noting: this response puts the literal string "Not Found" in the
+    `error` field rather than a code, so a client keying on `error` cannot treat it uniformly.'
+gaps:
+- 'No RFC 9457 application/problem+json anywhere; the envelope predates it and is custom.'
+- 'No documented error reference exists, so titles and remediation above are read from the observed
+  message strings, not from a provider source.'
+- 'Error code families are inconsistent (hyphen vs underscore) and at least one endpoint returns prose
+  where a code belongs.'

@@ -1,0 +1,87 @@
+generated: '2026-08-23'
+method: searched
+source: https://github.com/imvu/imvu-scripting-docs/blob/main/README.md#resource-limits
+docs: https://github.com/imvu/imvu-scripting-docs/blob/main/README.md#resource-limits
+note: 'All quantified limits below are published verbatim by IMVU in the Resource Limits section of the
+  room-scripting documentation. They govern the in-world Lua scripting sandbox, not an HTTP API. IMVU
+  publishes NO rate limits for api.imvu.com, and that host returns no RateLimit-*, X-RateLimit-* or
+  Retry-After headers on the unauthenticated responses probed on 2026-08-23 — the response headers
+  observed were server, date, expires, cache-control, pragma, vary and x-imvu-rnd only.'
+limit_count: 7
+rate_limits:
+- name: lua-sandbox-memory
+  surface: IMVU Room Scripting
+  scope: per-room
+  limit: 10485760
+  unit: bytes
+  window: n/a
+  description: 'Every individual room is limited to approximately 10 megabytes of memory in its Lua
+    sandbox, including around 400 kilobytes of overhead.'
+- name: cpu-cores
+  surface: IMVU Room Scripting
+  scope: per-user
+  limit: 1
+  unit: cpu-core
+  window: n/a
+  description: Every individual user is limited to a single CPU core across all of their rooms.
+- name: iteration-cpu-time
+  surface: IMVU Room Scripting
+  scope: per-iteration
+  limit: 50
+  unit: milliseconds
+  window: per iteration (~20 iterations per second)
+  description: Individual iterations should not exceed 50ms of Lua processing time per iteration.
+- name: data-module-total
+  surface: IMVU Room Scripting (data.save / data.load)
+  scope: per-account
+  limit: 10485760
+  unit: bytes
+  window: n/a
+  description: The data modules are limited to a total usage of 10 megabytes for non-visitor data.
+- name: data-module-per-visitor
+  surface: IMVU Room Scripting (data.save / data.load)
+  scope: per-visitor
+  limit: 5120
+  unit: bytes
+  window: n/a
+  description: 'Visitor data has no total limit cap, but a limit of 5 kilobytes per visitor across all
+    scopes. These limits are described by IMVU as provisional and subject to change.'
+- name: poll-duration
+  surface: IMVU Room Scripting (imvu.create_poll)
+  scope: per-poll
+  limit: 1800
+  unit: seconds
+  window: per poll
+  description: 'Poll duration in seconds, default 60, minimum 10, maximum 1800.'
+- name: furniture-label-first-character
+  surface: IMVU Room Scripting (imvu.place_furniture)
+  scope: per-request
+  limit: 128
+  unit: bytes
+  window: n/a
+  description: 'Data-module key label is capped at a maximum length of 128 bytes.'
+unquantified_limits:
+- name: outgoing-message-and-invite-throttle
+  surface: IMVU Room Scripting
+  description: 'Outgoing messages, room invites, and other output to visitors are rate-limited to help
+    prevent obstructive amounts of spam; IMVU does not publish the numeric ceiling. Top-level limits are
+    also imposed against the script persona in any given room.'
+- name: data-module-throughput
+  surface: IMVU Room Scripting (data.save / data.load)
+  description: 'A throughput limit applies to save/load; saving or loading too quickly starts returning
+    error messages. The threshold is not published.'
+- name: streaming-media
+  surface: IMVU Room Scripting (imvu.control_media)
+  description: 'A script can stream in only one room at a time, and IMVU automatically stops the stream
+    if the room owner leaves the room.'
+data_retention:
+  policy: 'IMVU reserves the right to delete stale data; the provisional measure is deleting data that
+    has not been READ in at least the past 365 days.'
+  window_days: 365
+response_headers:
+  documented: []
+  observed_on_api_imvu_com: [server, date, expires, cache-control, pragma, vary, x-imvu-rnd]
+  retry_after: false
+  status_on_exhaustion: null
+  note: 'No rate-limit signalling headers were observed. Probed https://api.imvu.com/ (403),
+    https://api.imvu.com/product/product-52977230 (200) and https://api.imvu.com/user (200) on 2026-08-23.'

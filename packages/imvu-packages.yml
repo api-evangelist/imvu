@@ -1,0 +1,88 @@
+generated: '2026-08-23'
+method: searched
+source: 'registry.npmjs.org, pypi.org, api.github.com/orgs/imvu (2026-08-23)'
+note: 'Together Labs publishes NO first-party client library on any package registry. The IMVU GitHub
+  organisation is real and active (82 public repositories) but it is an engineering-infrastructure org —
+  forks of okhttp, boost, GHC, Cowboy, emscripten and similar, plus a handful of genuinely original IMVU
+  projects — not an SDK org. Nothing there wraps api.imvu.com. Consequently no `SDKs` pointer is emitted
+  in apis.yml: sdk_count is honestly zero.'
+official_package_count: 0
+packages: []
+first_party_open_source:
+- name: cal3d
+  registry: github
+  url: https://github.com/imvu/cal3d
+  official: true
+  language: C++
+  version: null
+  published: null
+  note: 'Open-source release of IMVU''s fork of the Cal3D skeletal animation library — the engine behind
+    IMVU avatars. Not a client SDK. No tagged releases; last push 2026-07-13. Version null because the
+    project is distributed as source with no registry artifact.'
+- name: imvujs
+  registry: github
+  url: https://github.com/imvu/imvujs
+  official: true
+  language: JavaScript
+  version: null
+  published: null
+  note: '"JavaScript for Grown-Ups" — IMVU''s in-house JS module/build tooling. Never published to npm
+    (registry.npmjs.org/imvujs returns 404). Last push 2019-08-23.'
+- name: imvu-scripting-docs
+  registry: github
+  url: https://github.com/imvu/imvu-scripting-docs
+  official: true
+  language: Lua
+  version: null
+  published: null
+  note: 'The room-scripting documentation and nine worked example scripts. Documentation, not a library;
+    no releases. Created 2026-05-01, last push 2026-06-11.'
+- name: gmtl
+  registry: github
+  url: https://github.com/imvu/gmtl
+  official: true
+  language: C++
+  version: null
+  published: null
+  note: IMVU fork of the Generic Math Template Library. Last push 2018-02-06.
+- name: leprechaun
+  registry: github
+  url: https://github.com/imvu/leprechaun
+  official: true
+  language: C++
+  version: null
+  published: null
+  note: 'Headless browser for running JavaScript with a DOM — an original IMVU project. Last push
+    2017-03-01.'
+- name: bluesteel
+  registry: github
+  url: https://github.com/imvu/bluesteel
+  official: true
+  language: Python
+  version: null
+  published: null
+  note: IMVU benchmarking/CI project. Last push 2020-01-27.
+- name: dtm-redis
+  registry: github
+  url: https://github.com/imvu/dtm-redis
+  official: true
+  language: Erlang
+  version: null
+  published: null
+  note: Distributed transaction management for Redis. Last push 2013-03-07.
+registries_checked:
+- {registry: npm, query: 'registry.npmjs.org/-/v1/search?text=imvu', first_party_hits: 0, note: 'Every
+    imvu-named npm package is third-party. The top results are credit-generator spam ("imvu free
+    credits", "imvu-h-ack-tool-2023-noban"); the only substantive ones are community projects —
+    imvu.js (github.com/imvujs, a third-party org, not github.com/imvu) and @dhkatz/cfl-converter.
+    registry.npmjs.org/imvujs returns 404.'}
+- {registry: pypi, query: 'pypi.org/simple/imvu/, pypi.org/pypi/imvu.py/json', first_party_hits: 0,
+   note: 'Both 404. The community imvu.py library is documented on readthedocs but is not a Together
+     Labs package.'}
+- {registry: maven-central, first_party_hits: 0, note: No Together Labs coordinates found.}
+- {registry: nuget, first_party_hits: 0, note: No Together Labs packages found.}
+- {registry: rubygems, first_party_hits: 0, note: No Together Labs gems found.}
+- {registry: crates.io, first_party_hits: 0, note: No Together Labs crates found.}
+- {registry: pkg.go.dev, first_party_hits: 0, note: No Together Labs modules found.}
+third_party_note: 'A community ecosystem exists around the undocumented api.imvu.com (imvu.py, IMVUnity,
+  cfl-converter). None of it is first-party and none of it is recorded as a Together Labs SDK.'

@@ -1,0 +1,185 @@
+generated: '2026-08-23'
+method: searched
+source: https://github.com/imvu/imvu-scripting-docs/blob/main/README.md
+also_probed: https://api.imvu.com
+note: 'Two unrelated surfaces with unrelated conventions. The room-scripting conventions are read from
+  IMVU''s own published documentation; the api.imvu.com conventions were established by probing live
+  unauthenticated responses on 2026-08-23, because IMVU publishes no reference for that host.'
+surfaces:
+- key: room-scripting
+  name: IMVU Room Scripting API
+  transport: 'Embedded Luau (Lua 5.1 derivative) sandbox executed server-side per Live Room. Not HTTP.'
+  docs: https://github.com/imvu/imvu-scripting-docs/blob/main/README.md
+- key: rest
+  name: IMVU REST API
+  transport: HTTPS/JSON hypermedia
+  base_url: https://api.imvu.com
+  docs: null
+
+authentication:
+  room_scripting:
+    style: ambient
+    description: 'No credentials. Scripts run under the room owner''s account inside the IMVU client;
+      access is gated on VIP membership (a Live Room is required to run a script) rather than on a token.
+      A script can only target current members of the room it runs in.'
+  rest:
+    style: session
+    description: 'Undocumented. POST /login exists and returns LOGIN-005 on an empty body; a session
+      resource lives at /login/session. Anonymous reads succeed on some services (/product, /user,
+      /room), while others return AUTHENTICATION-005. No OAuth surface exists — /oauth/token returns
+      REST_DISCOVER_001 "Service oauth does not exist". No key issuance is offered to the public.'
+    evidence: 'Vary: Accept, Cookie, Authorization observed on https://api.imvu.com/ (2026-08-23).'
+
+idempotency:
+  supported: true
+  surface: room-scripting
+  mechanism: caller-supplied-label
+  key_name: furniture_request.label
+  header: null
+  scope: 'per room script, per label'
+  retention: 'for the lifetime of the running script'
+  description: 'imvu.place_furniture is idempotent on a caller-chosen `label`. IMVU documents it
+    explicitly: "When you make repeated requests to place furniture with the same label, that furniture
+    item will be moved, rather than repeated." Re-issuing a placement with an unchanged label is
+    therefore a safe retry; changing the label is what creates a second object. The label must begin with
+    an ASCII alphabetic character.'
+  evidence: https://github.com/imvu/imvu-scripting-docs/blob/main/README.md#imvuplace_furniture
+  rest:
+    supported: false
+    note: 'No Idempotency-Key header and no idempotency semantics are documented or observable on
+      api.imvu.com.'
+
+reversibility:
+  grade: documented
+  note: 'Every write on the scripting surface has a documented inverse, but IMVU states a WINDOW for
+    none of them, so this grades `documented` rather than `verified`. The one thing that carries a stated
+    time bound is stale-data deletion, which is a retention policy rather than a reversal window.'
+  write_surfaces:
+  - action: imvu.place_furniture
+    reversal: imvu.remove_furniture
+    reversal_key: the furniture label used at placement
+    window: null
+    window_source: null
+    note: 'Only furniture placed by the room script can be removed by it. imvu.remove_all_furniture is
+      documented as the bulk inverse but is marked "Temporarily Disabled!" in the current alpha docs.'
+    docs: https://github.com/imvu/imvu-scripting-docs/blob/main/README.md#imvuremove_furniture
+  - action: imvu.remove_user_from_scene
+    reversal: 'none direct; the user is demoted to an Audience member and may rejoin the scene'
+    window: null
+    window_source: null
+    note: 'Not a removal from the room — the user stays in the Audience. IMVU states the guaranteed
+      escape hatch the other way round: "a user can always escape unwanted behavior by simply leaving
+      your room."'
+  - action: imvu.control_media (play_media)
+    reversal: imvu.control_media (stop_media / pause_media)
+    window: null
+    window_source: null
+    note: 'IMVU also stops the stream automatically if the room owner leaves the room.'
+  - action: imvu.create_poll
+    reversal: none
+    window: null
+    window_source: null
+    note: 'A poll cannot be cancelled once created; it runs for its duration (default 60s, min 10s,
+      max 1800s) and then fires the success callback.'
+  - action: 'imvu.message_audience / imvu.message_scene / imvu.whisper_audience_member'
+    reversal: none
+    window: null
+    window_source: null
+    note: Sent chat is not retractable.
+  - action: data.save
+    reversal: 'data.save with a replacement value under the same key'
+    window: null
+    window_source: null
+    note: 'No delete operation is documented. Stale data is purged by IMVU after 365 days without a
+      READ, which is a retention policy and not a user-invocable reversal.'
+  - action: imvu.send_room_invite
+    reversal: none
+    window: null
+    window_source: null
+  rest:
+    grade: na
+    note: 'No write surface is publicly reachable on api.imvu.com, so reversibility is not applicable
+      there.'
+
+dry_run_mode:
+  supported: false
+  note: 'No sandbox, simulation or dry-run flag is published for either surface. The scripting alpha''s
+    nearest equivalent is the room-owner-only debug log written by imvu.debug.'
+
+pagination:
+  surface: rest
+  style: offset
+  parameters:
+  - name: limit
+    default: 25
+    description: Page size.
+  - name: start_index
+    default: 0
+    description: Zero-based offset.
+  response_fields:
+  - denormalized.<node_url>.data.items
+  - denormalized.<node_url>.data.total_count
+  link_fields:
+  - denormalized.<node_url>.relations.previous
+  - denormalized.<node_url>.relations.next
+  evidence: 'GET https://api.imvu.com/user returned relations.previous =
+    https://api.imvu.com/user?limit=25&start_index=0 (2026-08-23).'
+
+envelope:
+  surface: rest
+  style: hypermedia-denormalized
+  description: 'Every response is wrapped in a fixed envelope: `status` (success|failure), `id` (the
+    canonical URL of the requested node), `denormalized` (a map keyed by node URL, each carrying `data`,
+    `relations`, `headers` and sometimes `updates`), and `http` (a per-node map of status, headers and
+    meta). Because the map is keyed by URL, a single response can carry several related nodes — the
+    "denormalized" name — and a client resolves relationships by following the URLs in `relations`
+    rather than by constructing paths.'
+  identifier_convention: 'Node ids are namespaced by service: /user/user-<cid>, /product/product-<pid>,
+    /room/room-<id>, /derivation_fee/derivation_fee-<pid>, /look_model/look_model-product-<pid>.'
+  caching: 'Per-node ETags are surfaced inside the envelope at http.<node_url>.headers.etag rather than
+    only as a transport header.'
+
+versioning:
+  surface: rest
+  scheme: none
+  description: 'No version segment in the path, no version header, no media-type versioning. Paths are
+    /<service>/<service>-<id> with no /v1 prefix.'
+  room_scripting:
+    scheme: none
+    description: 'The scripting surface is an unversioned alpha. IMVU describes limits as "provisional
+      and subject to change" and marks at least one method as temporarily disabled.'
+
+error_handling:
+  catalog: errors/imvu-error-codes.yml
+  rfc9457: false
+  description: 'Failure responses replace the success envelope entirely with
+    { status: "failure", error: "<CODE>", message: "<prose>" }.'
+
+request_tracing:
+  header: x-imvu-rnd
+  description: 'An `x-imvu-rnd` response header is present on api.imvu.com responses. It is not
+    documented; whether it is a request identifier or a cache-buster is unstated, so it should not be
+    relied on as a correlation id.'
+  correlation_id_documented: false
+
+rate_limit_signalling:
+  catalog: rate-limits/imvu-rate-limits.yml
+  headers: []
+  description: 'No RateLimit-*, X-RateLimit-* or Retry-After headers observed. The scripting surface
+    publishes hard resource limits instead, enforced in-sandbox.'
+
+data_scoping:
+  surface: room-scripting
+  description: 'data.save / data.load take a key that may be a plain string or a table with `label`,
+    `scope` and `visitor`. Scope is the access-control axis: `script` isolates the value to the one
+    script, `room` shares it with other scripts in the same room, `account` shares it across all scripts
+    on the account. `visitor` re-keys the record to a visitor CustomerID, readable only while that
+    account is in the live room, and bills against a much smaller per-visitor quota.'
+
+concurrency_model:
+  surface: room-scripting
+  description: 'Cooperative, tick-based. event_begin_iteration and event_end_iteration bracket each
+    ~50ms tick; queued room events are replayed inside the tick; a script that exceeds 50ms of Lua time
+    in a tick is over budget. Callbacks (poll results, data.save/data.load) are delivered on a later
+    tick, so scripts are written as state machines against the `steady_clock` float passed to
+    event_begin_iteration.'

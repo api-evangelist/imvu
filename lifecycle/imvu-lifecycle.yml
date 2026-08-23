@@ -1,0 +1,67 @@
+generated: '2026-08-23'
+method: searched
+source: https://github.com/imvu/imvu-scripting-docs/blob/main/README.md
+note: 'Together Labs publishes no API versioning policy, no deprecation policy, no SLA and no developer
+  status page. What it does publish is a candid alpha posture for room scripting, which is recorded
+  below because it is the closest thing to a lifecycle statement the company makes about a developer
+  surface.'
+versioning:
+  scheme: none
+  policy_url: null
+  description: 'api.imvu.com carries no version segment, no version header and no versioned media type.
+    Room scripting is an unversioned alpha.'
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  description: 'No deprecation policy published, and no Sunset or Deprecation response headers observed
+    on api.imvu.com (2026-08-23).'
+  observed_deprecations:
+  - surface: IMVU Room Scripting
+    item: imvu.remove_all_furniture
+    state: temporarily-disabled
+    evidence: 'Documented verbatim as "Temporarily Disabled!" in the method reference.'
+    replacement: 'imvu.remove_furniture(label), called once per placed label'
+  - surface: IMVU Room Scripting
+    item: poll voter output
+    state: disabled
+    evidence: 'Footnote 1: "Voter output is currently disabled for alpha testers, as we discuss the user
+      safety implications."'
+  - surface: IMVU Developer Program
+    item: public API key issuance
+    state: retired
+    evidence: 'No developer portal remains — https://developers.imvu.com/ redirects to
+      https://secure.imvu.com/welcome/login/ (2026-08-23) and no key-request flow is published.'
+maturity:
+  room_scripting:
+    stage: alpha
+    availability: 'VIP-only; a Live Room is required to run a script'
+    scope: 'Individual Live Rooms today; IMVU states support for scripted PRODUCTS is planned "if
+      everything goes to plan".'
+    stability_statement: 'IMVU describes the data limits as "provisional and subject to change" and
+      reserves the right to delete data not read in 365 days.'
+    in_development:
+    - data.save
+    - data.load
+  rest:
+    stage: undocumented-production
+    availability: 'Publicly reachable; a subset answers unauthenticated. No published contract, support
+      channel or compatibility promise.'
+status_page:
+  exists: false
+  url: null
+  evidence: 'https://status.imvu.com/ resolves but 302s into https://secure.imvu.com/welcome/login/
+    (2026-08-23) — a login wall, not a status page.'
+sla:
+  published: false
+support:
+  channels:
+  - {name: Consumer support, url: 'https://support.imvu.com/support/home', type: helpdesk}
+  - {name: Room scripting issues, url: 'https://github.com/imvu/imvu-scripting-docs/issues', type: github-issues}
+  - {name: Creator community, url: 'https://discord.gg/imvuofficial', type: discord}
+  - {name: Scripting alpha channel, url: null, type: discord, note: '#scripting-chat, limited to the alpha tester group'}
+changelog:
+  published: false
+  note: 'No dated changelog for either surface. The room-scripting repository has no releases and no
+    CHANGELOG; its last commit was 2026-06-11 (repo created 2026-05-01).'

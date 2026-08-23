@@ -1,0 +1,86 @@
+generated: '2026-08-23'
+method: derived
+source: 'probed https://api.imvu.com + https://github.com/imvu/imvu-scripting-docs (2026-08-23)'
+note: 'Assertions below are recorded against what was actually observed. Together Labs makes no
+  standards-conformance claim anywhere on its public surface, and the consumer-social market this
+  company sits in has no domain interchange standard to conform to, so the domain-standard slot is
+  correctly empty rather than filled.'
+standards:
+- id: openapi
+  conforms: false
+  evidence: 'No OpenAPI/Swagger document found. Probed /openapi.json, /openapi.yaml, /swagger.json,
+    /v1/openapi.json, /api-docs, /docs, /redoc on api.imvu.com (all 404 with a JSON error envelope) and
+    on togetherlabs.com, about.imvu.com, create.imvu.com, www.imvu.com, secure.imvu.com (all 404).'
+- id: asyncapi
+  conforms: false
+  evidence: 'No AsyncAPI document and no webhook surface. The room-scripting event model is an in-process
+    callback API, not a network event surface, so nothing here would be expressible as AsyncAPI channels.'
+- id: graphql
+  conforms: false
+  evidence: 'No /graphql surface found on any host.'
+- id: mcp
+  conforms: false
+  evidence: 'POST tools/list to https://api.imvu.com/mcp (404) and https://togetherlabs.com/mcp (404).
+    https://mcp.imvu.com/mcp resolves via wildcard DNS and 404s after redirect.'
+- id: a2a
+  conforms: false
+  evidence: '/.well-known/agent-card.json and /.well-known/agent.json returned 404 on api.imvu.com,
+    togetherlabs.com, about.imvu.com, create.imvu.com, www.imvu.com and secure.imvu.com.'
+- id: oauth2
+  conforms: false
+  evidence: 'GET https://api.imvu.com/oauth/token returns REST_DISCOVER_001 "Service oauth does not
+    exist". /.well-known/oauth-authorization-server 404s on every host.'
+- id: oidc
+  conforms: false
+  evidence: '/.well-known/openid-configuration 404s on every host probed.'
+- id: rfc9457
+  conforms: false
+  evidence: 'Errors are a custom { status, error, message } envelope served as application/json, not
+    application/problem+json. See errors/imvu-error-codes.yml.'
+- id: rfc9116
+  conforms: false
+  evidence: '/.well-known/security.txt 404s on every host probed.'
+- id: rfc8594
+  conforms: false
+  evidence: No Sunset or Deprecation headers observed.
+- id: pagination
+  conforms: true
+  style: offset
+  evidence: 'GET https://api.imvu.com/user returns relations.previous =
+    https://api.imvu.com/user?limit=25&start_index=0 — a consistent limit/start_index offset scheme with
+    hypermedia page links.'
+- id: idempotency
+  conforms: true
+  scope: room-scripting only
+  evidence: 'imvu.place_furniture is documented as idempotent on the caller-supplied `label`. No HTTP
+    idempotency key exists on api.imvu.com.'
+- id: hypermedia
+  conforms: true
+  evidence: 'Every api.imvu.com success response carries a `relations` map of absolute node URLs
+    (creator, parent, ancestor_products, uml_products, derivation_fee, allow_nft, look_model), which is
+    how a client traverses the graph. It is not HAL, JSON:API or Siren — it is a bespoke "denormalized"
+    envelope keyed by node URL.'
+- id: json-api
+  conforms: false
+  evidence: 'Not JSON:API — no data/type/attributes shape, no application/vnd.api+json.'
+- id: hal
+  conforms: false
+  evidence: 'Not HAL — no _links / _embedded.'
+domain_standard:
+  applicable: false
+  note: 'Consumer 3D social / virtual-goods marketplaces have no published interchange standard in
+    scoring.yml''s regime list, and Together Labs claims none. Recorded as not applicable rather than as
+    a failure — there is nothing here for a buyer to already speak.'
+  candidates_checked:
+  - {standard: glTF, found: false, note: 'IMVU distributes proprietary asset formats (CFL) via
+      asset-server-akm.imvu.com; no glTF/USD surface is published.'}
+  - {standard: ActivityPub, found: false, note: 'No /.well-known/webfinger, no actor endpoint.'}
+compliance:
+  certifications_published: []
+  note: 'No SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP claim found. https://about.imvu.com/trust is a
+    Trust & Safety page — parental advisory, community guidelines, flagging, word filters, Access Pass —
+    not a security trust center, so no Compliance or TrustCenter pointer is emitted.'
+  regulatory_context: 'MetaJuice''s VCOIN is described in Together Labs press material as a transferable
+    digital currency recognised by U.S. regulators. No machine-readable or documentary evidence of that
+    posture was found on a Together Labs host during this pass, so it is recorded as context, not as a
+    conformance assertion.'

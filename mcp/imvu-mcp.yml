@@ -1,0 +1,22 @@
+generated: '2026-08-23'
+method: probed
+source: 'POST tools/list to https://api.imvu.com/mcp, https://togetherlabs.com/mcp, https://mcp.imvu.com/mcp (2026-08-23)'
+status: none
+note: 'Together Labs ships no MCP server, hosted or local, and no candidate tool list could be derived
+  because the company publishes no OpenAPI to derive one from. No MCPServer pointer is emitted in
+  apis.yml. This file records the probe so a later round does not repeat it blind.'
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: probed
+probes:
+- {url: 'https://api.imvu.com/mcp', method: 'POST tools/list', status: 404, body: 'REST_DISCOVER_001 — Service mcp does not exist'}
+- {url: 'https://togetherlabs.com/mcp', method: 'POST tools/list', status: 404}
+- {url: 'https://mcp.imvu.com/mcp', method: 'POST tools/list', status: 301, note: 'redirects to /mcp/ which 404s; mcp.imvu.com resolves only through wildcard DNS'}
+- {url: 'https://api.imvu.com/.well-known/oauth-authorization-server', status: 404}
+- {url: 'https://api.imvu.com/.well-known/oauth-protected-resource', status: 404}
+tools: []
+derivation_blocked_by: 'no OpenAPI or other machine-readable contract published for api.imvu.com'
