@@ -10,6 +10,18 @@ description: 'Together Labs (Palo Alto, California) is the company behind IMVU, 
   surface, a persistent key/value data module and published resource limits. Neither surface ships an
   OpenAPI, an AsyncAPI, an MCP server, an agent card or an llms.txt.'
 url: https://raw.githubusercontent.com/api-evangelist/imvu/refs/heads/main/apis.yml
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 image: https://togetherlabs.com/wp-content/uploads/2021/01/together-labs-logo.png
 x-type: company
 x-source: harvest:secondary-market
