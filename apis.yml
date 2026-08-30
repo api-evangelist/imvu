@@ -57,6 +57,11 @@ apis:
   - Scripting
   - Lua
   - Virtual Worlds
+  - Event
+  tags_raw:
+  - Scripting
+  - Lua
+  - Virtual Worlds
   - Events
   properties:
   - type: Documentation
@@ -85,6 +90,11 @@ apis:
     by probing the live host, not read from a contract.'
   baseURL: https://api.imvu.com
   tags:
+  - Hypermedia
+  - REST
+  - Virtual Goods
+  - User
+  tags_raw:
   - Hypermedia
   - REST
   - Virtual Goods
