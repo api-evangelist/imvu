@@ -11,16 +11,19 @@ description: 'Together Labs (Palo Alto, California) is the company behind IMVU, 
   OpenAPI, an AsyncAPI, an MCP server, an agent card or an llms.txt.'
 url: https://raw.githubusercontent.com/api-evangelist/imvu/refs/heads/main/apis.yml
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - imvu/imvu-scripting-docs
   open_source: unknown
   commercial: true
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: paid
@@ -44,6 +47,19 @@ specificationVersion: '0.20'
 created: '2026-08-23'
 modified: '2026-08-23'
 tags:
+- Company
+- Social Network
+- Virtual Worlds
+- Metaverse
+- Gaming
+- Avatars
+- Virtual Goods
+- Marketplace
+- User Generated Content
+- Scripting
+- Digital Currency
+- Blockchain
+tags_raw:
 - Company
 - Social Networking
 - Virtual Worlds
