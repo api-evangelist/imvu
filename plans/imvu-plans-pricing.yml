@@ -70,3 +70,40 @@ developer_plans:
   count: 0
   note: 'No API plan, no free developer tier, no key issuance. IMVU retired the public developer
     program that issued API keys; api.imvu.com is reachable but unsold and undocumented.'
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: VIP Gold
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: VIP Platinum
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: VIP Diamond
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: VIP Emerald
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Legacy VIP
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
