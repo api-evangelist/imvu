@@ -1,14 +1,14 @@
 generated: '2026-08-23'
 method: searched
 source: https://about.imvu.com/vip-club
-note: 'IMVU sells consumer subscriptions, not API plans. There is no developer pricing, no API tier and
-  no metered plan for either api.imvu.com or the room-scripting alpha — room scripting is gated on VIP
-  membership rather than sold separately (a Live Room is required to run a script, so the alpha is
-  VIP-only). The tiers below are the consumer VIP subscription tiers, read verbatim from the VIP Club
-  page on 2026-08-23. Prices are the monthly desktop prices stated in the page FAQ copy; the page also
-  advertises "1,000 - 30,000+ Free Monthly Credits" across the tier range without breaking the grant
-  out per tier in machine-readable form, so per-tier credit grants are recorded as null rather than
-  guessed.'
+name: Together Labs pricing
+note: IMVU sells consumer subscriptions, not API plans. There is no developer pricing, no API tier and no metered
+  plan for either api.imvu.com or the room-scripting alpha — room scripting is gated on VIP membership rather than
+  sold separately (a Live Room is required to run a script, so the alpha is VIP-only). The tiers below are the consumer
+  VIP subscription tiers, read verbatim from the VIP Club page on 2026-08-23. Prices are the monthly desktop prices
+  stated in the page FAQ copy; the page also advertises "1,000 - 30,000+ Free Monthly Credits" across the tier range
+  without breaking the grant out per tier in machine-readable form, so per-tier credit grants are recorded as null
+  rather than guessed.
 plan_count: 5
 currency: USD
 billing_period: monthly
@@ -20,10 +20,11 @@ plans:
   included_quota: null
   overage: null
   limits:
-    api_access: none
-    room_scripting_alpha: true
-  description: 'Entry tier of the Tiered VIP program. Free admission to the Creator Program, access to
-    Whisper, hosting benefits, access to Voice, Live Rooms.'
+  - 'api_access: none'
+  - 'room_scripting_alpha: True'
+  description: Entry tier of the Tiered VIP program. Free admission to the Creator Program, access to Whisper, hosting
+    benefits, access to Voice, Live Rooms.
+  price_text: $4.99 per month
 - name: VIP Platinum
   price: 9.99
   currency: USD
@@ -31,9 +32,10 @@ plans:
   included_quota: null
   overage: null
   limits:
-    api_access: none
-    room_scripting_alpha: true
+  - 'api_access: none'
+  - 'room_scripting_alpha: True'
   description: Enhanced features over Gold.
+  price_text: $9.99 a month
 - name: VIP Diamond
   price: 19.99
   currency: USD
@@ -41,10 +43,11 @@ plans:
   included_quota: null
   overage: null
   limits:
-    api_access: none
-    room_scripting_alpha: true
-  description: 'Enhanced and exclusive features, early access to IMVU development, plus Double Daily
-    Spin (Emerald and Diamond only).'
+  - 'api_access: none'
+  - 'room_scripting_alpha: True'
+  description: Enhanced and exclusive features, early access to IMVU development, plus Double Daily Spin (Emerald
+    and Diamond only).
+  price_text: $19.99 a month
 - name: VIP Emerald
   price: 29.99
   currency: USD
@@ -52,24 +55,24 @@ plans:
   included_quota: null
   overage: null
   limits:
-    api_access: none
-    room_scripting_alpha: true
-  description: 'Top tier. All Diamond perks plus more monthly Credits, more spins and more rooms.'
+  - 'api_access: none'
+  - 'room_scripting_alpha: True'
+  description: Top tier. All Diamond perks plus more monthly Credits, more spins and more rooms.
+  price_text: $29.99 a month
 - name: Legacy VIP
-  price: null
   currency: USD
   billing_period: monthly
   included_quota: null
   overage: null
   limits:
-    api_access: none
-  description: 'Grandfathered single-price-point program. Free admission to the Creator Program and
-    access to Whisper, but no hosting benefits, no Voice, no Double Daily Spin, and not available on
-    IMVU Mobile or IMVU Desktop. IMVU does not publish the Legacy price on this page.'
+  - 'api_access: none'
+  description: Grandfathered single-price-point program. Free admission to the Creator Program and access to Whisper,
+    but no hosting benefits, no Voice, no Double Daily Spin, and not available on IMVU Mobile or IMVU Desktop. IMVU
+    does not publish the Legacy price on this page.
 developer_plans:
   count: 0
-  note: 'No API plan, no free developer tier, no key issuance. IMVU retired the public developer
-    program that issued API keys; api.imvu.com is reachable but unsold and undocumented.'
+  note: No API plan, no free developer tier, no key issuance. IMVU retired the public developer program that issued
+    API keys; api.imvu.com is reachable but unsold and undocumented.
 x-canonical:
   generated: '2026-10-08'
   vocabulary: all/0-working/economics/plans-canonical.yml
@@ -107,3 +110,8 @@ x-canonical:
     model_how: derived
     units: []
     periods: []
+audience: consumer
+pricing_basis: tiered-subscription
+published: true
+delivery:
+  delivery: managed

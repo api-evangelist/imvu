@@ -1,15 +1,16 @@
 aid: imvu
+
 name: Together Labs
-description: 'Together Labs (Palo Alto, California) is the company behind IMVU, the 3D avatar-based
-  social network and virtual-goods marketplace, alongside MetaJuice, its blockchain arm, and the VCOIN
-  transferable digital currency. Its developer surface is unusual for a consumer platform: the public
-  developer program that once issued API keys was retired, but api.imvu.com remains a live, publicly
-  readable hypermedia REST API — a "denormalized" node envelope over users, products, rooms and
-  derivation relationships — and Together Labs publishes a genuinely documented, first-party in-world
-  scripting API for IMVU rooms in Lua/Luau on GitHub, complete with an event model, an imvu.* method
-  surface, a persistent key/value data module and published resource limits. Neither surface ships an
-  OpenAPI, an AsyncAPI, an MCP server, an agent card or an llms.txt.'
+
+description: 'Together Labs (Palo Alto, California) is the company behind IMVU, the 3D avatar-based social network and virtual-goods marketplace,
+  alongside MetaJuice, its blockchain arm, and the VCOIN transferable digital currency. Its developer surface is unusual for a consumer platform:
+  the public developer program that once issued API keys was retired, but api.imvu.com remains a live, publicly readable hypermedia REST API —
+  a "denormalized" node envelope over users, products, rooms and derivation relationships — and Together Labs publishes a genuinely documented,
+  first-party in-world scripting API for IMVU rooms in Lua/Luau on GitHub, complete with an event model, an imvu.* method surface, a persistent
+  key/value data module and published resource limits. Neither surface ships an OpenAPI, an AsyncAPI, an MCP server, an agent card or an llms.txt.'
+
 url: https://raw.githubusercontent.com/api-evangelist/imvu/refs/heads/main/apis.yml
+
 deliveryModel:
   model: saas
   license_evidence:
@@ -25,6 +26,7 @@ deliveryModel:
   - repository-not-product
   generated: '2026-09-25'
   method: derived
+
 accessModel:
   pricing: paid
   onboarding: open
@@ -40,12 +42,19 @@ accessModel:
   - security
   generated: '2026-09-02'
   method: derived
+
 image: https://togetherlabs.com/wp-content/uploads/2021/01/together-labs-logo.png
+
 x-type: company
+
 x-source: harvest:secondary-market
+
 specificationVersion: '0.20'
+
 created: '2026-08-23'
+
 modified: '2026-10-06'
+
 tags:
 - Company
 - Social Network
@@ -59,6 +68,7 @@ tags:
 - Scripting
 - Digital Currency
 - Blockchain
+
 tags_raw:
 - Company
 - Social Networking
@@ -72,17 +82,67 @@ tags_raw:
 - Scripting
 - Digital Currency
 - Blockchain
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+
+common:
+- type: Deprecation
+  url: lifecycle/imvu-lifecycle.yml
+- type: Hosts
+  url: hosts/imvu-hosts.yml
+- type: Vendors
+  url: vendors/imvu-vendors.yml
+- type: Newsroom
+  url: https://togetherlabs.com/press/
+- url: https://togetherlabs.com/press/
+  type: Blog
+- type: DomainSecurity
+  url: security/imvu-domain-security.yml
+- type: Website
+  url: https://togetherlabs.com/
+- type: Documentation
+  url: https://github.com/imvu/imvu-scripting-docs/blob/main/README.md
+- type: GitHubOrganization
+  url: https://github.com/imvu
+- type: Support
+  url: https://support.imvu.com/support/home
+- type: Blog
+  url: https://blog.imvu.com/
+- type: Pricing
+  url: https://about.imvu.com/vip-club
+- type: SignUp
+  url: https://secure.imvu.com/welcome/login/
+- type: TermsOfService
+  url: https://about.imvu.com/terms
+- type: PrivacyPolicy
+  url: https://www.imvu.com/next/policyhub/privacypolicy/
+- type: Plans
+  url: plans/imvu-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/imvu-rate-limits.yml
+- type: Lifecycle
+  url: lifecycle/imvu-lifecycle.yml
+- type: Conventions
+  url: conventions/imvu-conventions.yml
+- type: Idempotency
+  url: conventions/imvu-conventions.yml
+- type: DataModel
+  url: data-model/imvu-data-model.yml
+- type: Conformance
+  url: conformance/imvu-conformance.yml
+
 apis:
 - name: IMVU Room Scripting API
-  description: 'First-party in-world scripting API for IMVU Live Rooms. Room scripts are single-file
-    Lua programs executed server-side in a Luau sandbox; the engine calls event functions
-    (event_start, event_begin_iteration, event_message_received, event_state_changed,
-    event_tip_received, event_end_iteration, event_stop) roughly 20 times a second, and scripts call
-    back into an imvu.* method surface to chat, whisper, place and remove furniture, move and remove
-    scene members, send room invites, control embedded YouTube media, create polls and read audience
-    or scene membership. A data.save / data.load module provides persistent key/value storage scoped
-    to script, room, account or individual visitor. Published as a VIP-only alpha; documentation and
-    nine worked example scripts are published by IMVU on GitHub.'
+  description: First-party in-world scripting API for IMVU Live Rooms. Room scripts are single-file Lua programs executed server-side in a Luau
+    sandbox; the engine calls event functions (event_start, event_begin_iteration, event_message_received, event_state_changed, event_tip_received,
+    event_end_iteration, event_stop) roughly 20 times a second, and scripts call back into an imvu.* method surface to chat, whisper, place and
+    remove furniture, move and remove scene members, send room invites, control embedded YouTube media, create polls and read audience or scene
+    membership. A data.save / data.load module provides persistent key/value storage scoped to script, room, account or individual visitor. Published
+    as a VIP-only alpha; documentation and nine worked example scripts are published by IMVU on GitHub.
   humanURL: https://github.com/imvu/imvu-scripting-docs
   tags:
   - Scripting
@@ -111,14 +171,13 @@ apis:
     url: conventions/imvu-conventions.yml
   - type: DataModel
     url: data-model/imvu-data-model.yml
+  aid: imvu:imvu-room-scripting-api
 - name: IMVU REST API
-  description: 'Production hypermedia REST API serving IMVU''s own web and mobile clients. It is
-    publicly reachable and a meaningful slice of it answers unauthenticated: GET /product/product-<id>,
-    /user/user-<id> and /room return a "denormalized" node envelope carrying data, relations and a
-    per-node http block, with collection endpoints paginated by limit and start_index. Together Labs
-    publishes no reference documentation, no OpenAPI and no key-issuance process for it — the public
-    developer program that issued API keys was retired — so everything recorded here was established
-    by probing the live host, not read from a contract.'
+  description: 'Production hypermedia REST API serving IMVU''s own web and mobile clients. It is publicly reachable and a meaningful slice of
+    it answers unauthenticated: GET /product/product-<id>, /user/user-<id> and /room return a "denormalized" node envelope carrying data, relations
+    and a per-node http block, with collection endpoints paginated by limit and start_index. Together Labs publishes no reference documentation,
+    no OpenAPI and no key-issuance process for it — the public developer program that issued API keys was retired — so everything recorded here
+    was established by probing the live host, not read from a contract.'
   baseURL: https://api.imvu.com
   tags:
   - Hypermedia
@@ -131,64 +190,27 @@ apis:
   - Virtual Goods
   - Users
   properties:
-  - type: ErrorCatalog
-    url: errors/imvu-error-codes.yml
   - type: DataModel
     url: data-model/imvu-data-model.yml
   - type: Conventions
     url: conventions/imvu-conventions.yml
-  x-note: 'Undocumented. No developer portal, no API reference and no published contract; the base URL
-    and every behaviour recorded in the derived artifacts were probed directly on 2026-08-23.'
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-- FN: APIs.json
-  email: info@apis.io
-common:
-- url: https://togetherlabs.com/press/
-  type: Blog
-- type: DomainSecurity
-  url: security/imvu-domain-security.yml
-- type: Website
-  url: https://togetherlabs.com/
-- type: Documentation
-  url: https://github.com/imvu/imvu-scripting-docs/blob/main/README.md
-- type: GitHubOrganization
-  url: https://github.com/imvu
-- type: Support
-  url: https://support.imvu.com/support/home
-- type: Blog
-  url: https://blog.imvu.com/
-- type: Pricing
-  url: https://about.imvu.com/vip-club
-- type: SignUp
-  url: https://secure.imvu.com/welcome/login/
-- type: TermsOfService
-  url: https://about.imvu.com/terms
-- type: PrivacyPolicy
-  url: https://www.imvu.com/next/policyhub/privacypolicy/
-- type: Plans
-  url: plans/imvu-plans-pricing.yml
-- type: RateLimits
-  url: rate-limits/imvu-rate-limits.yml
-- type: LLMsTxt
-  url: llms/imvu-llms.txt
-- type: ErrorCatalog
-  url: errors/imvu-error-codes.yml
-- type: Lifecycle
-  url: lifecycle/imvu-lifecycle.yml
-- type: Conventions
-  url: conventions/imvu-conventions.yml
-- type: Idempotency
-  url: conventions/imvu-conventions.yml
-- type: DataModel
-  url: data-model/imvu-data-model.yml
-- type: Conformance
-  url: conformance/imvu-conformance.yml
-- type: Packages
-  url: packages/imvu-packages.yml
+  x-note: Undocumented. No developer portal, no API reference and no published contract; the base URL and every behaviour recorded in the derived
+    artifacts were probed directly on 2026-08-23.
+  aid: imvu:imvu-rest-api
+x-coverage:
+  state: unreadable
+  reason: no-machine-readable-spec
+  detail: api.imvu.com is a live but undocumented hypermedia API that answers REST_DISCOVER_003 404s for openapi.json, swagger.json and api-docs, and the only published docs are the Lua room-scripting README on GitHub, with no HTTP contract.
+  evidence:
+  - url: https://api.imvu.com/openapi.json
+    status: 404
+  - url: https://api.imvu.com/swagger.json
+    status: 404
+  - url: https://raw.githubusercontent.com/imvu/imvu-scripting-docs/main/README.md
+    status: 200
+  checked: '2026-10-20'
 x-enrichment:
-  date: '2026-08-23'
-  status: enriched
-  artifacts_added: 13
-  pass: local-v1
+  date: '2026-10-20'
+  status: nochange
+  artifacts_added: 0
+  pass: local-v5

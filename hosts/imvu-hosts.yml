@@ -1,0 +1,158 @@
+generated: '2026-10-20'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 11
+  own: 2
+  other_domain: 8
+  platform: 1
+  roles:
+  - api
+  - docs
+  - identity
+  - legal
+  - marketing
+  - other
+  - portal
+  - support
+  - website
+hosts:
+- host: about.imvu.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - Pricing
+  - TermsOfService
+  serves: []
+  registrable_domain: imvu.com
+  role: marketing
+  relation: other-domain
+- host: api.imvu.com
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: imvu.com
+  role: api
+  relation: other-domain
+- host: api.togetherlabs.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: togetherlabs.com
+  role: api
+  relation: own
+- host: blog.imvu.com
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  types:
+  - Blog
+  serves: []
+  registrable_domain: imvu.com
+  role: marketing
+  relation: other-domain
+- host: create.imvu.com
+  found_by:
+  - probed
+  - site-links
+  - docs-index
+  types: []
+  serves:
+  - docs
+  registrable_domain: imvu.com
+  role: other
+  relation: other-domain
+- host: developer.imvu.com
+  found_by:
+  - probed
+  - site-links
+  - namespace-probe
+  - well-known
+  types: []
+  serves: []
+  title: IMVU Create
+  status: 200
+  registrable_domain: imvu.com
+  role: portal
+  relation: other-domain
+- host: github.com
+  found_by:
+  - pointer
+  - apis[]
+  - vendor-detect
+  types:
+  - Documentation
+  - GitHubOrganization
+  serves:
+  - docs
+  - hosting
+  vendor: github-pages
+  registrable_domain: github.com
+  role: docs
+  relation: platform
+- host: secure.imvu.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - SignUp
+  serves: []
+  registrable_domain: imvu.com
+  role: identity
+  relation: other-domain
+- host: support.imvu.com
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Support
+  serves:
+  - support
+  vendor: freshdesk
+  registrable_domain: imvu.com
+  role: support
+  relation: other-domain
+- host: togetherlabs.com
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Newsroom
+  - Blog
+  - Website
+  serves:
+  - cdn
+  - hosting
+  vendor: cloudflare
+  registrable_domain: togetherlabs.com
+  role: website
+  relation: own
+- host: www.imvu.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - PrivacyPolicy
+  serves: []
+  registrable_domain: imvu.com
+  role: legal
+  relation: other-domain
