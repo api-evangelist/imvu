@@ -64,5 +64,104 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Together Labs is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/imvu_stock/
+Together Labs (Palo Alto, California) is the company behind IMVU, the 3D avatar-based social network and virtual-goods marketplace, alongside MetaJuice, its blockchain arm, and the VCOIN transferable digital currency. Its developer surface is unusual for a consumer platform: the public developer program that once issued API keys was retired, but api.imvu.com remains a live, publicly readable hypermedia REST API — a "denormalized" node envelope over users, products, rooms and derivation relationships — and Together Labs publishes a genuinely documented, first-party in-world scripting API for IMVU rooms in Lua/Luau on GitHub, complete with an event model, an imvu.* method surface, a persistent key/value data module and published resource limits. Neither surface ships an OpenAPI, an AsyncAPI, an MCP server, an agent card or an llms.txt.
+
+**Areas:** Company · Social Network · Virtual Worlds · Metaverse · Gaming · Avatars · Virtual Goods · Marketplace · User Generated Content · Scripting · Digital Currency · Blockchain
+
+## Together Labs on APIs.io
+
+Everything profiled for Together Labs is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/imvu/](https://apis.io/providers/imvu/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [IMVU Room Scripting API](https://apis.io/apis/imvu/imvu-room-scripting-api/) — First-party in-world scripting API for IMVU Live Rooms. Room scripts are single-file Lua programs executed server-side in a Luau sandbox; the engine calls…
+- [IMVU REST API](https://apis.io/apis/imvu/imvu-rest-api/) — Production hypermedia REST API serving IMVU's own web and mobile clients. It is publicly reachable and a meaningful slice of it answers unauthenticated: GET…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Imvu Domain Security](https://apis.io/security/imvu/imvu-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Imvu Plans Pricing](https://apis.io/plans/imvu/imvu-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Imvu Rate Limits](https://apis.io/rate-limits/imvu/imvu-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://togetherlabs.com/)
+- [Documentation](https://github.com/imvu/imvu-scripting-docs/blob/main/README.md)
+- [Pricing](https://about.imvu.com/vip-club)
+- [Sign up](https://secure.imvu.com/welcome/login/)
+- [Support](https://support.imvu.com/support/home)
+- [Blog](https://togetherlabs.com/press/)
+- [Terms of service](https://about.imvu.com/terms)
+- [Privacy policy](https://www.imvu.com/next/policyhub/privacypolicy/)
+- [GitHub](https://github.com/imvu)
+
+## API Evangelist rating
+
+**Kin Score 31.8** — thin · rubric 0.24.0 · scored 2026-10-20
+
+| Facet | Score |
+|---|---|
+| Discoverability | 50.0 |
+| Contract quality | 6.5 |
+| Contract governance | 4.5 |
+| Operational transparency | 42.1 |
+| Developer ergonomics | 16.7 |
+| Access clarity | 76.3 |
+
+**Agent readiness 7.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | documented (partial credit) |
+| Error Semantics | — |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 18.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/imvu/](https://apis.io/providers/imvu/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Together Labs: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/imvu/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
